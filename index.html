@@ -3,157 +3,326 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#17110f" />
-  <meta name="description" content="Dra. Aleksandra Carla — harmonização facial e estética avançada na Mooca, São Paulo. Beleza, naturalidade e cuidado em cada detalhe." />
+  <meta name="theme-color" content="#0b0b0a" />
+  <meta name="description" content="Dra. Aleksandra Carla — harmonização facial e estética avançada na Mooca, São Paulo. Naturalidade, técnica e cuidado individual." />
   <title>Dra. Aleksandra Carla — Harmonização Facial</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-grid"></div>
+    <div class="loader-mark">AC</div>
+    <div class="loader-copy"><span>proporção</span><span>naturalidade</span><span>identidade</span></div>
+    <div class="loader-bar"><i></i></div>
+  </div>
+
+  <canvas id="fieldCanvas" class="field-canvas" aria-hidden="true"></canvas>
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
 
   <header class="site-header" id="top">
     <a class="brand magnetic" href="#top" aria-label="Dra. Aleksandra Carla — início">
-      <span class="brand-sign">AC</span>
-      <span class="brand-copy"><b>Dra. Aleksandra</b><small>Harmonização Facial</small></span>
+      <span class="brand-seal">AC</span>
+      <span class="brand-name"><b>Dra. Aleksandra Carla</b><small>Harmonização facial · Mooca</small></span>
     </a>
 
     <nav class="desktop-nav" aria-label="Navegação principal">
-      <a href="#conceito">Conceito</a>
+      <a href="#filosofia">Filosofia</a>
+      <a href="#mapa">Análise</a>
       <a href="#procedimentos">Procedimentos</a>
-      <a href="#experiencia">Experiência</a>
       <a href="#avaliacoes">Avaliações</a>
     </nav>
 
-    <a class="nav-cta magnetic" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer">Agendar avaliação <span>↗</span></a>
+    <a class="header-cta magnetic" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer">
+      <span>Agendar avaliação</span><b>↗</b>
+    </a>
 
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menu"><span></span><span></span></button>
   </header>
 
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <a href="#conceito">Conceito</a>
+    <div class="mobile-index">menu / 05</div>
+    <a href="#filosofia">Filosofia</a>
+    <a href="#mapa">Análise</a>
     <a href="#procedimentos">Procedimentos</a>
-    <a href="#experiencia">Experiência</a>
     <a href="#avaliacoes">Avaliações</a>
-    <a class="mobile-cta" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer">Agendar pelo WhatsApp ↗</a>
+    <a href="#contato">Contato</a>
+    <div class="mobile-bottom">
+      <span>Mooca · São Paulo</span>
+      <a href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer">WhatsApp ↗</a>
+    </div>
   </div>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true"><img src="assets/hero.webp" alt="" fetchpriority="high" /></div>
-      <div class="hero-wash" aria-hidden="true"></div>
-      <div class="hero-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-1" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-2" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-3" aria-hidden="true"></div>
 
-      <div class="hero-copy">
-        <div class="eyebrow reveal"><span></span>Harmonização facial · Mooca, São Paulo</div>
-        <h1 id="hero-title" class="reveal reveal-delay-1">Realçar sem <em>apagar quem você é.</em></h1>
-        <p class="reveal reveal-delay-2">Uma estética guiada por proporção, cuidado e naturalidade — para resultados que conversam com o seu rosto, não com tendências passageiras.</p>
-        <div class="hero-actions reveal reveal-delay-3">
-          <a class="button button-solid magnetic" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer"><span>Agendar avaliação</span><b>↗</b></a>
-          <a class="button button-glass magnetic" href="#procedimentos"><span>Conhecer tratamentos</span><b>↓</b></a>
+      <div class="hero-kicker reveal">
+        <span class="code">AC / 01</span>
+        <span>harmonização facial · estética avançada</span>
+      </div>
+
+      <div class="hero-title-wrap">
+        <h1 id="hero-title" aria-label="Realçar sem apagar quem você é">
+          <span class="hero-line line-a reveal-text">realçar</span>
+          <span class="hero-line line-b reveal-text"><em>sem</em> apagar</span>
+          <span class="hero-line line-c reveal-text">quem você é.</span>
+        </h1>
+      </div>
+
+      <div class="hero-copy reveal">
+        <p>Uma estética que começa pela leitura do rosto e termina onde deve: em você ainda reconhecendo a própria expressão.</p>
+        <div class="hero-actions">
+          <a class="pill pill-light magnetic" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer"><span>Agendar avaliação</span><b>↗</b></a>
+          <a class="pill pill-outline magnetic" href="#mapa"><span>Explorar abordagem</span><b>↓</b></a>
         </div>
       </div>
 
-      <div class="hero-side reveal reveal-delay-4">
-        <span>naturalidade</span><i></i><span>técnica</span><i></i><span>harmonia</span>
+      <div class="face-system" id="faceSystem" aria-hidden="true">
+        <div class="face-axis axis-x"></div>
+        <div class="face-axis axis-y"></div>
+        <div class="face-oval oval-a"></div>
+        <div class="face-oval oval-b"></div>
+        <div class="face-oval oval-c"></div>
+        <div class="face-curve curve-a"></div>
+        <div class="face-curve curve-b"></div>
+        <span class="face-node node-1" data-depth="1.1"></span>
+        <span class="face-node node-2" data-depth=".8"></span>
+        <span class="face-node node-3" data-depth="1.4"></span>
+        <span class="face-node node-4" data-depth=".9"></span>
+        <span class="face-node node-5" data-depth="1.2"></span>
+        <span class="face-label label-1">proporção</span>
+        <span class="face-label label-2">simetria</span>
+        <span class="face-label label-3">expressão</span>
+        <div class="face-center"><span>01</span><b>leitura individual</b></div>
       </div>
 
-      <div class="hero-proof reveal reveal-delay-4">
-        <div><strong>5,0</strong><span>avaliação pública</span></div>
-        <div><strong>120+</strong><span>avaliações registradas</span></div>
+      <div class="hero-metrics reveal">
+        <div><strong class="counter" data-value="5.0">5,0</strong><span>avaliação pública</span></div>
+        <div><strong class="counter" data-value="165">165</strong><span>avaliações</span></div>
         <div><strong>Mooca</strong><span>São Paulo · SP</span></div>
       </div>
 
-      <div class="scroll-mark" aria-hidden="true"><span>explore</span><i></i></div>
+      <div class="hero-note" aria-hidden="true"><span>scroll to explore</span><i></i></div>
     </section>
 
-    <section class="manifesto section" id="conceito">
-      <div class="section-tag reveal">01 — Filosofia</div>
-      <div class="manifesto-grid">
-        <div class="manifesto-title reveal"><p class="kicker">Beleza com intenção.</p><h2>Harmonia não é sobre mudar um rosto. É sobre <em>entender o que ele pede.</em></h2></div>
-        <div class="manifesto-copy reveal reveal-delay-1"><p>A comunicação da Dra. Aleksandra é construída em torno de naturalidade, confiança e resultados equilibrados. A proposta desta experiência digital segue a mesma lógica: menos exagero, mais precisão.</p><p>Antes de qualquer procedimento, existe uma avaliação. É ali que proporções, desejos e expectativas começam a se transformar em um plano realmente individual.</p></div>
+    <section class="statement section" id="filosofia">
+      <div class="section-rail">
+        <span class="section-number">01</span>
+        <span class="section-name">Filosofia</span>
       </div>
 
-      <div class="geometry-stage reveal" data-parallax="0.035">
-        <div class="geometry-orbit orbit-a"></div>
-        <div class="geometry-orbit orbit-b"></div>
-        <div class="geometry-core"><span>harmonia</span><b>é proporção + intenção</b></div>
-        <div class="geometry-label label-a">01 · escuta</div>
-        <div class="geometry-label label-b">02 · análise</div>
-        <div class="geometry-label label-c">03 · estratégia</div>
+      <div class="statement-copy">
+        <p class="micro reveal">BELEZA COM INTENÇÃO</p>
+        <h2 class="split-heading">
+          <span class="reveal-text">Seu rosto não precisa</span>
+          <span class="reveal-text">parecer <em>outro.</em></span>
+        </h2>
+        <p class="statement-body reveal">A abordagem pública da Dra. Aleksandra valoriza naturalidade, harmonia e individualidade. Aqui, isso vira interface: cada elemento se organiza por proporção, não por excesso.</p>
+      </div>
+
+      <div class="statement-side reveal">
+        <div class="principle"><span>01</span><p><b>Escutar</b><br>antes de indicar.</p></div>
+        <div class="principle"><span>02</span><p><b>Analisar</b><br>antes de intervir.</p></div>
+        <div class="principle"><span>03</span><p><b>Preservar</b><br>antes de transformar.</p></div>
+      </div>
+
+      <div class="type-marquee" aria-hidden="true">
+        <div class="type-track"><span>NATURALIDADE</span><i>✦</i><span>PROPORÇÃO</span><i>✦</i><span>IDENTIDADE</span><i>✦</i><span>NATURALIDADE</span><i>✦</i><span>PROPORÇÃO</span><i>✦</i><span>IDENTIDADE</span><i>✦</i></div>
       </div>
     </section>
 
-    <section class="treatments section" id="procedimentos">
-      <div class="treatments-head">
-        <div><div class="section-tag reveal">02 — Procedimentos</div><h2 class="reveal">Cada detalhe tem <em>um motivo.</em></h2></div>
-        <p class="reveal reveal-delay-1">Serviços destacados nos canais públicos da profissional. A indicação depende de avaliação individual.</p>
+    <section class="analysis section" id="mapa">
+      <div class="section-rail light">
+        <span class="section-number">02</span>
+        <span class="section-name">Leitura facial</span>
       </div>
 
-      <div class="treatment-list">
-        <article class="treatment-row reveal" data-index="01"><span class="treatment-index">01</span><div><small>Planejamento individual</small><h3>Avaliação</h3><p>O ponto de partida para entender proporções, prioridades e possibilidades antes de qualquer decisão.</p></div><span class="row-arrow">↗</span></article>
-        <article class="treatment-row reveal" data-index="02"><span class="treatment-index">02</span><div><small>Harmonização integrada</small><h3>Full Face</h3><p>Uma leitura global da face, buscando equilíbrio entre regiões sem perder identidade.</p></div><span class="row-arrow">↗</span></article>
-        <article class="treatment-row reveal" data-index="03"><span class="treatment-index">03</span><div><small>Contorno e proporção</small><h3>Preenchimento Labial</h3><p>Estratégias de volume, contorno e simetria com foco em resultado harmônico.</p></div><span class="row-arrow">↗</span></article>
-        <article class="treatment-row reveal" data-index="04"><span class="treatment-index">04</span><div><small>Perfil e equilíbrio</small><h3>Rinomodelação</h3><p>Ajustes de contorno voltados à relação do nariz com o restante do perfil facial.</p></div><span class="row-arrow">↗</span></article>
-        <article class="treatment-row reveal" data-index="05"><span class="treatment-index">05</span><div><small>Método autoral divulgado</small><h3>Trio dos Sonhos</h3><p>Uma das experiências destacadas nos canais oficiais de agendamento da Dra. Aleksandra.</p></div><span class="row-arrow">↗</span></article>
+      <div class="analysis-head">
+        <div>
+          <p class="micro reveal">NÃO É RECEITA. É LEITURA.</p>
+          <h2 class="split-heading">
+            <span class="reveal-text">O mesmo procedimento</span>
+            <span class="reveal-text">não serve para <em>todo rosto.</em></span>
+          </h2>
+        </div>
+        <p class="analysis-intro reveal">A avaliação existe para entender estrutura, equilíbrio, movimento e expectativa. Passe o cursor pelo mapa e veja como a lógica muda de ponto para ponto.</p>
       </div>
 
-      <a class="section-link magnetic reveal" href="https://linktr.ee/draaleksandra" target="_blank" rel="noreferrer">Ver opções oficiais de agendamento <span>↗</span></a>
-    </section>
+      <div class="analysis-stage" id="analysisStage">
+        <div class="analysis-grid" aria-hidden="true"></div>
+        <div class="scan-line" aria-hidden="true"></div>
 
-    <section class="experience section" id="experiencia">
-      <div class="experience-media reveal"><img src="assets/studio.webp" alt="Ambiente conceitual de clínica de estética, em tons claros e iluminação acolhedora" loading="lazy" /><span>Imagem conceitual criada para esta apresentação.</span></div>
-      <div class="experience-copy">
-        <div class="section-tag reveal">03 — Experiência</div>
-        <h2 class="reveal">Segurança também é <em>sentir que pode confiar.</em></h2>
-        <p class="reveal reveal-delay-1">Nas avaliações públicas, pacientes destacam acolhimento, explicação clara, cuidado com higiene e transparência durante os procedimentos. É isso que transforma uma consulta em uma experiência de confiança.</p>
-        <div class="experience-points">
-          <div class="reveal"><span>01</span><p><b>Escuta antes da técnica.</b><br />Cada pessoa chega com uma expectativa diferente.</p></div>
-          <div class="reveal"><span>02</span><p><b>Clareza durante o processo.</b><br />Informação reduz ansiedade e melhora decisões.</p></div>
-          <div class="reveal"><span>03</span><p><b>Naturalidade como direção.</b><br />O objetivo é preservar expressão e identidade.</p></div>
+        <div class="map-center" aria-hidden="true">
+          <div class="map-ring ring-1"></div>
+          <div class="map-ring ring-2"></div>
+          <div class="map-ring ring-3"></div>
+          <div class="map-ring ring-4"></div>
+          <div class="map-axis horizontal"></div>
+          <div class="map-axis vertical"></div>
+          <div class="map-axis diagonal"></div>
+          <div class="map-core"><span>AC</span><small>análise 360°</small></div>
+        </div>
+
+        <button class="map-point point-1" type="button" data-title="Perfil" data-copy="Relação entre projeção, contorno e leitura lateral."><span>01</span><b>perfil</b></button>
+        <button class="map-point point-2" type="button" data-title="Lábios" data-copy="Contorno, proporção e relação com o restante da face."><span>02</span><b>lábios</b></button>
+        <button class="map-point point-3" type="button" data-title="Terço médio" data-copy="Equilíbrio entre regiões centrais e pontos de sustentação."><span>03</span><b>terço médio</b></button>
+        <button class="map-point point-4" type="button" data-title="Expressão" data-copy="Preservar movimento é parte do resultado natural."><span>04</span><b>expressão</b></button>
+
+        <div class="map-info" id="mapInfo">
+          <span class="map-info-index">00 / 04</span>
+          <h3>Leitura integrada</h3>
+          <p>Nenhum ponto existe isolado. O rosto é lido como conjunto.</p>
         </div>
       </div>
     </section>
 
-    <section class="social-proof section" id="avaliacoes">
-      <div class="proof-intro">
-        <div class="section-tag reveal">04 — Avaliações</div>
-        <h2 class="reveal">Quem volta, volta pela <em>experiência inteira.</em></h2>
-        <div class="rating reveal reveal-delay-1"><strong>5,0</strong><div><span>★★★★★</span><small>avaliação pública máxima em diretórios consultados</small></div></div>
+    <section class="procedures section" id="procedimentos">
+      <div class="section-rail">
+        <span class="section-number">03</span>
+        <span class="section-name">Procedimentos</span>
       </div>
 
-      <div class="quotes">
-        <blockquote class="quote-card reveal"><p>“Naturalidade, harmonia e ótima durabilidade.”</p><footer>Paciente · avaliação pública</footer></blockquote>
-        <blockquote class="quote-card reveal"><p>“Profissionalismo, cuidado e delicadeza.”</p><footer>Paciente · avaliação pública</footer></blockquote>
-        <blockquote class="quote-card reveal"><p>“Sempre muito bem atendida e sempre saindo mais bonita.”</p><footer>Paciente · avaliação pública</footer></blockquote>
+      <div class="procedures-head">
+        <h2 class="split-heading">
+          <span class="reveal-text">Menos catálogo.</span>
+          <span class="reveal-text">Mais <em>estratégia.</em></span>
+        </h2>
+        <p class="reveal">Procedimentos divulgados nos canais públicos da profissional. A indicação depende de avaliação individual.</p>
+      </div>
+
+      <div class="procedure-stack">
+        <article class="procedure-card" data-number="01">
+          <div class="procedure-code">AC—01</div>
+          <div class="procedure-main"><span>ponto de partida</span><h3>Avaliação</h3><p>Leitura facial, objetivos e possibilidades antes de qualquer decisão.</p></div>
+          <div class="procedure-meta"><span>análise</span><span>planejamento</span><span>individual</span></div>
+          <a href="https://wa.me/5511984831332?text=Olá!%20Quero%20agendar%20uma%20avaliação." target="_blank" rel="noreferrer" aria-label="Agendar avaliação">↗</a>
+        </article>
+
+        <article class="procedure-card" data-number="02">
+          <div class="procedure-code">AC—02</div>
+          <div class="procedure-main"><span>harmonização integrada</span><h3>Full Face</h3><p>Uma leitura global para buscar equilíbrio sem apagar traços pessoais.</p></div>
+          <div class="procedure-meta"><span>proporção</span><span>equilíbrio</span><span>global</span></div>
+          <a href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Full%20Face." target="_blank" rel="noreferrer" aria-label="Perguntar sobre Full Face">↗</a>
+        </article>
+
+        <article class="procedure-card" data-number="03">
+          <div class="procedure-code">AC—03</div>
+          <div class="procedure-main"><span>contorno e proporção</span><h3>Preenchimento Labial</h3><p>Volume e desenho pensados em relação ao restante do rosto.</p></div>
+          <div class="procedure-meta"><span>contorno</span><span>simetria</span><span>naturalidade</span></div>
+          <a href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20preenchimento%20labial." target="_blank" rel="noreferrer" aria-label="Perguntar sobre preenchimento labial">↗</a>
+        </article>
+
+        <article class="procedure-card" data-number="04">
+          <div class="procedure-code">AC—04</div>
+          <div class="procedure-main"><span>perfil e equilíbrio</span><h3>Rinomodelação</h3><p>Estratégia de contorno voltada à relação do nariz com o perfil facial.</p></div>
+          <div class="procedure-meta"><span>perfil</span><span>contorno</span><span>harmonia</span></div>
+          <a href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20rinomodelação." target="_blank" rel="noreferrer" aria-label="Perguntar sobre rinomodelação">↗</a>
+        </article>
+
+        <article class="procedure-card" data-number="05">
+          <div class="procedure-code">AC—05</div>
+          <div class="procedure-main"><span>método divulgado</span><h3>Trio dos Sonhos</h3><p>Uma das experiências de harmonização destacadas nos canais oficiais.</p></div>
+          <div class="procedure-meta"><span>combinação</span><span>estratégia</span><span>método</span></div>
+          <a href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Trio%20dos%20Sonhos." target="_blank" rel="noreferrer" aria-label="Perguntar sobre Trio dos Sonhos">↗</a>
+        </article>
       </div>
     </section>
 
-    <section class="education-strip" aria-label="Atuação profissional">
-      <div class="education-track"><span>HARMONIZAÇÃO FACIAL</span><i>✦</i><span>ESTÉTICA AVANÇADA</span><i>✦</i><span>NATURALIDADE</span><i>✦</i><span>MENTORIAS & CURSOS</span><i>✦</i><span>HARMONIZAÇÃO FACIAL</span><i>✦</i><span>ESTÉTICA AVANÇADA</span><i>✦</i><span>NATURALIDADE</span><i>✦</i><span>MENTORIAS & CURSOS</span><i>✦</i></div>
+    <section class="experience section">
+      <div class="experience-word" aria-hidden="true">CUIDADO</div>
+      <div class="section-rail light">
+        <span class="section-number">04</span>
+        <span class="section-name">Experiência</span>
+      </div>
+
+      <div class="experience-grid">
+        <div class="experience-title">
+          <p class="micro reveal">TÉCNICA SEM ACOLHIMENTO NÃO BASTA</p>
+          <h2 class="split-heading">
+            <span class="reveal-text">Confiança também</span>
+            <span class="reveal-text">faz parte do <em>resultado.</em></span>
+          </h2>
+        </div>
+
+        <div class="experience-flow">
+          <div class="flow-line" aria-hidden="true"><i></i></div>
+          <article class="flow-step reveal"><span>01</span><div><small>antes</small><h3>Escuta</h3><p>Expectativas, histórico e o que realmente incomoda.</p></div></article>
+          <article class="flow-step reveal"><span>02</span><div><small>durante</small><h3>Clareza</h3><p>Explicação do plano, limites e escolhas possíveis.</p></div></article>
+          <article class="flow-step reveal"><span>03</span><div><small>depois</small><h3>Acompanhamento</h3><p>Cuidado não termina no momento do procedimento.</p></div></article>
+        </div>
+      </div>
     </section>
 
-    <section class="contact section">
-      <div class="contact-orbit" aria-hidden="true"></div>
-      <div class="contact-content">
-        <div class="section-tag reveal">05 — Agendamento</div>
-        <p class="contact-kicker reveal">Seu rosto já tem uma linguagem.</p>
-        <h2 class="reveal">A próxima etapa é <em>escutá-la.</em></h2>
-        <p class="reveal reveal-delay-1">Agende uma avaliação e converse diretamente com a equipe sobre o que faz sentido para você.</p>
-        <a class="button button-solid button-large magnetic reveal reveal-delay-2" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação%20com%20a%20Dra.%20Aleksandra." target="_blank" rel="noreferrer"><span>Conversar no WhatsApp</span><b>↗</b></a>
+    <section class="reviews section" id="avaliacoes">
+      <div class="section-rail">
+        <span class="section-number">05</span>
+        <span class="section-name">Reputação</span>
       </div>
-      <div class="contact-meta reveal"><div><span>Endereço</span><p>Rua Serra da Bocaina, 570<br />Mooca · São Paulo — SP</p></div><div><span>Atendimento</span><p>Terça a sexta · 10h–19h<br />Sábado · 10h–16h</p></div><div><span>Instagram</span><p><a href="https://www.instagram.com/dra.aleksandracarla/" target="_blank" rel="noreferrer">@dra.aleksandracarla ↗</a></p></div></div>
+
+      <div class="reviews-head">
+        <div class="rating-orbit reveal" aria-label="Nota 5 de 5">
+          <div class="rating-ring"></div>
+          <strong>5,0</strong>
+          <span>★★★★★</span>
+          <small>avaliação pública</small>
+        </div>
+        <h2 class="split-heading">
+          <span class="reveal-text">O que mais importa</span>
+          <span class="reveal-text">é como você <em>se sente.</em></span>
+        </h2>
+      </div>
+
+      <div class="review-grid">
+        <blockquote class="review-card reveal"><span>01</span><p>“Naturalidade, harmonia e ótima durabilidade.”</p><footer>paciente · avaliação pública</footer></blockquote>
+        <blockquote class="review-card reveal"><span>02</span><p>“Profissionalismo, cuidado e delicadeza.”</p><footer>paciente · avaliação pública</footer></blockquote>
+        <blockquote class="review-card reveal"><span>03</span><p>“Sempre muito bem atendida e sempre saindo mais bonita.”</p><footer>paciente · avaliação pública</footer></blockquote>
+      </div>
+    </section>
+
+    <section class="contact section" id="contato">
+      <div class="contact-field" aria-hidden="true">
+        <span class="contact-ring ring-a"></span>
+        <span class="contact-ring ring-b"></span>
+        <span class="contact-ring ring-c"></span>
+        <span class="contact-cross x"></span>
+        <span class="contact-cross y"></span>
+      </div>
+
+      <div class="contact-top">
+        <span class="code">AC / FINAL</span>
+        <span>Mooca · São Paulo</span>
+      </div>
+
+      <div class="contact-copy">
+        <p class="micro reveal">A PRIMEIRA DECISÃO NÃO É O PROCEDIMENTO.</p>
+        <h2 class="split-heading">
+          <span class="reveal-text">É conversar sobre</span>
+          <span class="reveal-text">o que faz <em>sentido.</em></span>
+        </h2>
+        <p class="reveal">Agende uma avaliação e entenda possibilidades, limites e um plano pensado para o seu rosto.</p>
+        <a class="contact-button magnetic reveal" href="https://wa.me/5511984831332?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação%20com%20a%20Dra.%20Aleksandra." target="_blank" rel="noreferrer"><span>Conversar no WhatsApp</span><b>↗</b></a>
+      </div>
+
+      <div class="contact-meta">
+        <div><small>endereço</small><p>Rua Serra da Bocaina, 570<br>Mooca · São Paulo — SP</p></div>
+        <div><small>instagram</small><p><a href="https://www.instagram.com/dra.aleksandracarla/" target="_blank" rel="noreferrer">@dra.aleksandracarla ↗</a></p></div>
+        <div><small>contato</small><p><a href="https://wa.me/5511984831332" target="_blank" rel="noreferrer">(11) 98483-1332 ↗</a></p></div>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <a class="brand footer-brand" href="#top"><span class="brand-sign">AC</span><span class="brand-copy"><b>Dra. Aleksandra</b><small>Harmonização Facial</small></span></a>
-    <p>© 2026 · Apresentação conceitual independente baseada em informações públicas.</p>
-    <a href="#top">Voltar ao topo ↑</a>
+    <a href="#top" class="footer-brand"><span>AC</span><b>Dra. Aleksandra Carla</b></a>
+    <p>Harmonização facial · estética avançada</p>
+    <a href="#top">voltar ao topo ↑</a>
   </footer>
 
   <script src="script.js"></script>
