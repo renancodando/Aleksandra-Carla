@@ -1,6 +1,32 @@
 (() => {
   'use strict';
 
+  // Sempre inicia no topo. Safari/iOS costuma restaurar a posição anterior
+  // (ou obedecer um hash antigo) mesmo quando o documento foi recarregado.
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  } catch (_) {}
+
+  const forceTop = () => {
+    document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  };
+
+  forceTop();
+  requestAnimationFrame(() => {
+    forceTop();
+    requestAnimationFrame(forceTop);
+  });
+  window.addEventListener('pageshow', () => {
+    forceTop();
+    window.setTimeout(forceTop, 60);
+    window.setTimeout(forceTop, 220);
+  }, { once: true });
+
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const finePointer = window.matchMedia?.('(pointer: fine)').matches ?? false;
   const loader = document.querySelector('.loader');
@@ -9,8 +35,6 @@
   const mobileMenu = document.getElementById('mobileMenu');
   const progress = document.querySelector('.scroll-progress i');
 
-  // O loader nunca pode bloquear o site. Este fallback roda sem esperar
-  // imagens, fontes ou qualquer outro recurso externo terminar de carregar.
   let loaderReleased = false;
   const releaseLoader = () => {
     if (loaderReleased || !loader) return;
@@ -24,11 +48,13 @@
 
   window.setTimeout(releaseLoader, reduceMotion ? 80 : 1350);
   document.addEventListener('DOMContentLoaded', () => {
+    forceTop();
     window.setTimeout(releaseLoader, reduceMotion ? 0 : 900);
   }, { once: true });
-  window.addEventListener('load', releaseLoader, { once: true });
-
-  // Fallback adicional caso algum erro posterior interrompa outra parte do JS.
+  window.addEventListener('load', () => {
+    forceTop();
+    releaseLoader();
+  }, { once: true });
   window.addEventListener('error', () => window.setTimeout(releaseLoader, 0));
   window.addEventListener('unhandledrejection', () => window.setTimeout(releaseLoader, 0));
 
@@ -131,20 +157,6 @@
       });
       el.addEventListener('mouseleave', () => { el.style.transform = ''; });
     });
-
-    const face = document.getElementById('faceSystem');
-    face?.addEventListener('mousemove', event => {
-      const rect = face.getBoundingClientRect();
-      const nx = (event.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
-      const ny = (event.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
-      face.querySelectorAll('.face-node').forEach(node => {
-        const depth = Number(node.dataset.depth || 1);
-        node.style.transform = `translate(${nx * 18 * depth}px,${ny * 18 * depth}px)`;
-      });
-    });
-    face?.addEventListener('mouseleave', () => {
-      face.querySelectorAll('.face-node').forEach(node => { node.style.transform = ''; });
-    });
   }
 
   const canvas = document.getElementById('fieldCanvas');
@@ -157,7 +169,6 @@
       let pointerX = 0.72;
       let pointerY = 0.28;
       let raf = 0;
-
       const resizeCanvas = () => {
         width = Math.max(1, window.innerWidth);
         height = Math.max(1, window.innerHeight);
@@ -168,55 +179,44 @@
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       };
-
       const draw = time => {
         ctx.clearRect(0, 0, width, height);
         const ox = width * pointerX;
         const oy = height * pointerY;
-
         for (let ringIndex = 0; ringIndex < 8; ringIndex++) {
           const base = Math.min(width, height) * (0.12 + ringIndex * 0.055);
           ctx.beginPath();
-          const segments = 90;
-          for (let i = 0; i <= segments; i++) {
-            const a = (i / segments) * Math.PI * 2;
+          for (let i = 0; i <= 90; i++) {
+            const a = (i / 90) * Math.PI * 2;
             const wobble = Math.sin(a * 3 + time * 0.00025 + ringIndex) * (6 + ringIndex * 1.1);
             const breathe = Math.sin(time * 0.0004 + ringIndex * 0.6) * 7;
             const r = base + wobble + breathe;
             const x = ox + Math.cos(a) * r * 1.18;
             const y = oy + Math.sin(a) * r * 0.82;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
           }
           ctx.strokeStyle = ringIndex % 2 ? 'rgba(215,160,110,0.055)' : 'rgba(233,228,218,0.035)';
           ctx.lineWidth = 1;
           ctx.stroke();
         }
-
         const radius = Math.max(1, Math.min(width, height) * 0.45);
         const glow = ctx.createRadialGradient(ox, oy, 0, ox, oy, radius);
         glow.addColorStop(0, 'rgba(114,45,54,.08)');
         glow.addColorStop(1, 'rgba(114,45,54,0)');
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, width, height);
-
         if (!reduceMotion) raf = requestAnimationFrame(draw);
       };
-
       resizeCanvas();
-      if (reduceMotion) draw(0);
-      else raf = requestAnimationFrame(draw);
-
+      if (reduceMotion) draw(0); else raf = requestAnimationFrame(draw);
       window.addEventListener('resize', resizeCanvas, { passive: true });
       window.addEventListener('pointermove', event => {
         pointerX += ((event.clientX / width) - pointerX) * 0.18;
         pointerY += ((event.clientY / height) - pointerY) * 0.18;
       }, { passive: true });
-
       document.addEventListener('visibilitychange', () => {
         if (reduceMotion) return;
-        if (document.hidden) cancelAnimationFrame(raf);
-        else raf = requestAnimationFrame(draw);
+        if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw);
       });
     }
   }
@@ -229,12 +229,10 @@
     mapInfo.querySelector('h3')?.replaceChildren(document.createTextNode(title));
     mapInfo.querySelector('p')?.replaceChildren(document.createTextNode(copy));
   };
-
   const resetMap = () => {
     mapPoints.forEach(point => point.classList.remove('is-active'));
     setMapInfo('00 / 04', 'Leitura integrada', 'Nenhum ponto existe isolado. O rosto é lido como conjunto.');
   };
-
   mapPoints.forEach((point, index) => {
     const activate = () => {
       mapPoints.forEach(item => item.classList.remove('is-active'));
@@ -279,15 +277,5 @@
       counterObserver.disconnect();
     }, { threshold: 0.5 });
     counterObserver.observe(counter);
-  }
-
-  if (!reduceMotion) {
-    document.querySelectorAll('.procedure-card').forEach(card => {
-      card.addEventListener('mousemove', event => {
-        const rect = card.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / Math.max(1, rect.width);
-        card.style.setProperty('--pointer-x', `${x * 100}%`);
-      });
-    });
   }
 })();
