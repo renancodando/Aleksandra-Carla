@@ -4,6 +4,26 @@
   const menuButton = document.querySelector('.menu-toggle');
   const mobileMenu = document.getElementById('mobileMenu');
   const heroImage = document.querySelector('.hero-media img');
+  const studioImage = document.querySelector('.experience-media img');
+
+  const loadAssetScript = src => new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+
+  Promise.all([
+    loadAssetScript('assets/hero.js'),
+    loadAssetScript('assets/studio.js')
+  ]).then(() => {
+    if (heroImage && window.__ALEKSANDRA_HERO__) heroImage.src = window.__ALEKSANDRA_HERO__;
+    if (studioImage && window.__ALEKSANDRA_STUDIO__) studioImage.src = window.__ALEKSANDRA_STUDIO__;
+  }).catch(() => {
+    if (heroImage) heroImage.alt = '';
+    if (studioImage) studioImage.alt = 'Ambiente conceitual de atendimento';
+  });
 
   const setHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 18);
   setHeader();
